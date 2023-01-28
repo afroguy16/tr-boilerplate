@@ -1,6 +1,9 @@
 import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { LoginFormPropsI } from "../../interfaces";
 
-export default () => {
+export default (props: LoginFormPropsI) => {
+  const { hasEmailError, hasError, isLoading, onSubmit } = props;
+
   return (
     <Flex
       direction="column"
