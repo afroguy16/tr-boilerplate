@@ -5,7 +5,6 @@ export interface LoginFormAttributesI {
 
 export interface LoginFormPropsI {
   isLoading: boolean;
-  hasEmailError: boolean;
-  hasError: boolean;
+  error: string;
   onSubmit: (payload: LoginFormAttributesI) => void;
 }

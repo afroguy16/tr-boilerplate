@@ -2,14 +2,9 @@ import LoginForm from "./components/LoginForm";
 import useLogin from "./useLogin";
 
 export default () => {
-  const { isLoading, hasEmailError, hasError } = useLogin();
+  const { isLoading, error } = useLogin();
 
   return (
-    <LoginForm
-      isLoading={isLoading}
-      hasEmailError={hasEmailError}
-      hasError={hasError}
-      onSubmit={() => null}
-    />
+    <LoginForm isLoading={isLoading} error={error} onSubmit={() => null} />
   );
 };
