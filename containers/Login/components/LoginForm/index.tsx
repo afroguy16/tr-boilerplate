@@ -2,7 +2,7 @@ import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { LoginFormPropsI } from "../../interfaces";
 
 export default (props: LoginFormPropsI) => {
-  const { hasEmailError, hasError, isLoading, onSubmit } = props;
+  const { isLoading, hasEmailError, hasError, onSubmit } = props;
 
   return (
     <Flex
@@ -11,15 +11,20 @@ export default (props: LoginFormPropsI) => {
       textAlign="center"
       paddingTop="200px"
     >
-      <form style={{ width: "300px" }}>
-        <FormControl mb="40px">
-          <FormLabel>Email address</FormLabel>
-          <Input type="email" mb={"20px"} />
-          <FormLabel>Password</FormLabel>
-          <Input type="password" />
-        </FormControl>
-        <Button colorScheme="blue">Login</Button>
-      </form>
+      <FormControl width={300}>
+        <FormLabel>Email address</FormLabel>
+        <Input type="email" mb={"20px"} />
+        <FormLabel>Password</FormLabel>
+        <Input type="password" mb={"40px"} />
+        <Button
+          role="button"
+          colorScheme="blue"
+          aria-label="login"
+          disabled={false}
+        >
+          Login
+        </Button>
+      </FormControl>
     </Flex>
   );
 };
