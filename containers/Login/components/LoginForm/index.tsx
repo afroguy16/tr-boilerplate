@@ -30,8 +30,7 @@ export default (props: LoginFormPropsI) => {
   const hasEmailError = emailErrorListener && !isEmailTypeValid;
   const hasPasswordError =
     password.length < MINIMUM_PASSWORD_LENGTH && passwordErrorListener;
-  const hasValidFormData =
-    Boolean(email) && isEmailTypeValid && isPasswordLengthValid;
+  const hasValidFormData = !!email && isEmailTypeValid && isPasswordLengthValid;
   const isEnabled = hasValidFormData && !isLoading;
 
   const handleOnResetPassword = () => {
@@ -96,6 +95,8 @@ export default (props: LoginFormPropsI) => {
         </FormControl>
 
         <Button
+          isLoading={isLoading}
+          loadingText="loading"
           role="button"
           colorScheme="blue"
           aria-label="login"
@@ -106,7 +107,7 @@ export default (props: LoginFormPropsI) => {
           }}
           textTransform="capitalize"
         >
-          {isLoading ? "loading" : "login"}
+          login
         </Button>
       </form>
     </Flex>
