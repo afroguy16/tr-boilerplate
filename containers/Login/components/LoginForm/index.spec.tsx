@@ -205,24 +205,15 @@ describe("Component - Login Form", () => {
     expect(buttonElement).toHaveTextContent(/loading/i);
   });
 
-  // it("should show an error alert when there is a login error", () => {
-  //   const error = "fake error";
+  it("should show an error alert when there is a login error", () => {
+    const error = "fake error";
 
-  //   const localProps = { ...props, error };
-  //   render(<LoginForm {...localProps} />);
+    const localProps = { ...props, error };
+    render(<LoginForm {...localProps} />);
 
-  //   const emailInputElement = screen.getByLabelText("email");
-  //   const buttonElement = screen.getByRole("button", { name: "login" });
-  //   const emailErrorTextElement = screen.queryByText(EMAIL_ERROR_TEXT);
-
-  //   screen.getByRole("alert");
-  //   screen.getByText(error);
-
-  //   expect(buttonElement).toBeEnabled();
-  //   expect(buttonElement).not.toHaveTextContent(/loading/i);
-  //   expect(emailInputElement).toBeValid();
-  //   expect(emailErrorTextElement).not.toBeInTheDocument();
-  // });
+    screen.getByRole("alert");
+    screen.getByText(error);
+  });
 
   it("should call the onSubmit callback function when the submit button is Clicked", async () => {
     const { onSubmit } = props;
