@@ -2,13 +2,13 @@ import LoginForm from "./components/LoginForm";
 import useLogin from "./useLogin";
 
 export default () => {
-  const { isLoading, error, onResetError } = useLogin();
+  const { isLoading, error, onResetError, onLogin } = useLogin();
 
   return (
     <LoginForm
       isLoading={isLoading}
       error={error}
-      onSubmit={() => null}
+      onLogin={onLogin}
       onResetError={onResetError}
     />
   );
