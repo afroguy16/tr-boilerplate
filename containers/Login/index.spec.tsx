@@ -1,12 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 
 import Login from ".";
-import {
-  EMAIL_ERROR_TEXT,
-  PASSWORD_ERROR_TEXT,
-} from "./components/LoginForm/constants";
 import { LoginFormPropsI } from "./interfaces";
 import useLogin from "./useLogin";
 
