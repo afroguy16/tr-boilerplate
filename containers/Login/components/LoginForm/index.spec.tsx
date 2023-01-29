@@ -9,7 +9,7 @@ describe("Component - Login Form", () => {
   const props: LoginFormPropsI = {
     isLoading: false,
     error: "",
-    onSubmit: jest.fn(),
+    onLogin: jest.fn(),
     onResetError: jest.fn(),
   };
 
@@ -217,8 +217,8 @@ describe("Component - Login Form", () => {
     screen.getByText(error);
   });
 
-  it("should call the onSubmit callback function when the submit button is Clicked", async () => {
-    const { onSubmit } = props;
+  it("should call the onLogin callback function when the submit button is Clicked", async () => {
+    const { onLogin } = props;
     const user = userEvent.setup();
     const email = "fake@email.co";
     const password = "fakePassword";
@@ -245,7 +245,7 @@ describe("Component - Login Form", () => {
 
     await user.click(buttonElement);
 
-    expect(onSubmit).toHaveBeenCalledWith({ email, password });
+    expect(onLogin).toHaveBeenCalledWith({ email, password });
   });
 
   it("should call the onResetError callback function when the user types on the email input if there was a network error", async () => {

@@ -6,6 +6,6 @@ export interface LoginFormAttributesI {
 export interface LoginFormPropsI {
   isLoading: boolean;
   error: string;
-  onSubmit: (payload: LoginFormAttributesI) => void;
+  onLogin: (payload: LoginFormAttributesI) => void;
   onResetError: () => void;
 }

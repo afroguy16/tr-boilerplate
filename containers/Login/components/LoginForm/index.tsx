@@ -19,7 +19,7 @@ import {
 } from "./constants";
 
 export default (props: LoginFormPropsI) => {
-  const { isLoading, error, onSubmit, onResetError } = props;
+  const { isLoading, error, onLogin, onResetError } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailErrorListener, setEmailErrorListener] = useState(false);
@@ -102,7 +102,7 @@ export default (props: LoginFormPropsI) => {
           aria-label="login"
           disabled={!isEnabled}
           onClick={() => {
-            onSubmit({ email, password });
+            onLogin({ email, password });
             handleOnResetPassword();
           }}
           textTransform="capitalize"
