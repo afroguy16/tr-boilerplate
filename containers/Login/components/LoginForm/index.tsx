@@ -19,7 +19,7 @@ import {
 } from "./constants";
 
 export default (props: LoginFormPropsI) => {
-  const { isLoading, error, onSubmit } = props;
+  const { isLoading, error, onSubmit, onResetError } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailErrorListener, setEmailErrorListener] = useState(false);
@@ -33,6 +33,10 @@ export default (props: LoginFormPropsI) => {
   const hasValidFormData =
     Boolean(email) && isEmailTypeValid && isPasswordLengthValid;
   const isEnabled = hasValidFormData && !isLoading;
+
+  const handleOnResetPassword = () => {
+    error && onResetError();
+  };
 
   return (
     <Flex
@@ -60,7 +64,10 @@ export default (props: LoginFormPropsI) => {
           <Input
             type="email"
             aria-label="email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              handleOnResetPassword();
+            }}
             onBlur={() => setEmailErrorListener(true)}
           />
           {hasEmailError && (
@@ -75,7 +82,10 @@ export default (props: LoginFormPropsI) => {
           <Input
             type="password"
             aria-label="password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              handleOnResetPassword();
+            }}
             onBlur={() => setPasswordErrorListener(true)}
           />
           {hasPasswordError && (
@@ -90,7 +100,10 @@ export default (props: LoginFormPropsI) => {
           colorScheme="blue"
           aria-label="login"
           disabled={!isEnabled}
-          onClick={() => onSubmit({ email, password })}
+          onClick={() => {
+            onSubmit({ email, password });
+            handleOnResetPassword();
+          }}
         >
           {isLoading ? "loading" : "login"}
         </Button>

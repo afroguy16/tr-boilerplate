@@ -2,13 +2,15 @@ import { screen, render, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import LoginForm from ".";
+import { LoginFormPropsI } from "../../interfaces";
 import { EMAIL_ERROR_TEXT, PASSWORD_ERROR_TEXT } from "./constants";
 
 describe("Component - Login Form", () => {
-  const props = {
+  const props: LoginFormPropsI = {
     isLoading: false,
     error: "",
     onSubmit: jest.fn(),
+    onResetError: jest.fn(),
   };
 
   it("should have a disabled login button which doesn't contain the text 'loading' when it is not loading", () => {
@@ -244,5 +246,131 @@ describe("Component - Login Form", () => {
     await user.click(buttonElement);
 
     expect(onSubmit).toHaveBeenCalledWith({ email, password });
+  });
+
+  it("should call the onResetError callback function when the user types on the email input if there was a network error", async () => {
+    const { onResetError } = props;
+    const localProps = { ...props, error: "fake error" };
+    const user = userEvent.setup();
+
+    render(<LoginForm {...localProps} />);
+
+    const emailInputElement = screen.getByLabelText("email");
+
+    await user.type(emailInputElement, "h");
+
+    expect(onResetError).toHaveBeenCalledTimes(1);
+    jest.resetAllMocks();
+  });
+
+  it("should not call the onResetError callback function when the user types on the email input if there is no network error", async () => {
+    const { onResetError } = props;
+    const user = userEvent.setup();
+
+    render(<LoginForm {...props} />);
+
+    const emailInputElement = screen.getByLabelText("email");
+
+    await user.type(emailInputElement, "hi@test.co");
+
+    expect(onResetError).not.toHaveBeenCalled();
+  });
+
+  it("should call the onResetError callback function when the user types on the password input if there was a network error", async () => {
+    const { onResetError } = props;
+    const localProps = { ...props, error: "fake error" };
+    const user = userEvent.setup();
+
+    render(<LoginForm {...localProps} />);
+
+    const passwordInputElement = screen.getByLabelText("password");
+
+    await user.type(passwordInputElement, "1");
+
+    expect(onResetError).toHaveBeenCalledTimes(1);
+    jest.resetAllMocks();
+  });
+
+  it("should not call the onResetError callback function when the user types on the password input if there is no network error", async () => {
+    const { onResetError } = props;
+    const user = userEvent.setup();
+
+    render(<LoginForm {...props} />);
+
+    const passwordInputElement = screen.getByLabelText("password");
+
+    await user.type(passwordInputElement, "1");
+
+    expect(onResetError).not.toHaveBeenCalled();
+    jest.resetAllMocks();
+  });
+
+  it("should call the onResetError callback function when the user clicks on the login button if the button isn't disabled and if there was a network error", async () => {
+    const { onResetError } = props;
+    const localProps = { ...props, error: "fake error" };
+    const user = userEvent.setup();
+
+    const email = "fake@email.co";
+    const password = "fakePassword";
+
+    render(<LoginForm {...localProps} />);
+
+    const emailInputElement = screen.getByLabelText("email");
+    const passwordInputElement = screen.getByLabelText("password");
+
+    const buttonElement = screen.getByRole("button", { name: "login" });
+    await user.type(emailInputElement, email);
+    act(() => {
+      emailInputElement.blur();
+    });
+
+    const emailErrorTextElement = screen.queryByText(EMAIL_ERROR_TEXT);
+    expect(emailErrorTextElement).not.toBeInTheDocument();
+    expect(emailInputElement).toBeValid();
+
+    await user.type(passwordInputElement, password);
+    act(() => {
+      passwordInputElement.blur();
+    });
+    jest.resetAllMocks();
+
+    await user.click(buttonElement);
+
+    expect(onResetError).toHaveBeenCalledTimes(1);
+    jest.resetAllMocks();
+  });
+
+  it("should not call the onResetError callback function when the user clicks on the login button if the button is disabled even if there was a network error", async () => {
+    const { onResetError } = props;
+    const user = userEvent.setup();
+
+    const email = "fake@email.co";
+    const password = "fakePassword";
+
+    render(<LoginForm {...props} />);
+
+    const emailInputElement = screen.getByLabelText("email");
+    const passwordInputElement = screen.getByLabelText("password");
+
+    const buttonElement = screen.getByRole("button", { name: "login" });
+    await user.type(emailInputElement, email);
+    act(() => {
+      emailInputElement.blur();
+    });
+
+    const emailErrorTextElement = screen.queryByText(EMAIL_ERROR_TEXT);
+    expect(emailErrorTextElement).not.toBeInTheDocument();
+    expect(emailInputElement).toBeValid();
+
+    await user.type(passwordInputElement, password);
+    act(() => {
+      passwordInputElement.blur();
+    });
+    jest.resetAllMocks();
+
+    await user.click(buttonElement);
+
+    expect(onResetError).not.toHaveBeenCalledTimes(1);
+    jest.resetAllMocks();
   });
 });
