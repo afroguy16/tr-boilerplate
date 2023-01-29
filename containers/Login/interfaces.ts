@@ -1,0 +1,11 @@
+export interface LoginFormAttributesI {
+  email: string;
+  password: string;
+}
+
+export interface LoginFormPropsI {
+  isLoading: boolean;
+  error: string;
+  onLogin: (payload: LoginFormAttributesI) => void;
+  onResetError: () => void;
+}
