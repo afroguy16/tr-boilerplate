@@ -104,6 +104,7 @@ export default (props: LoginFormPropsI) => {
             onSubmit({ email, password });
             handleOnResetPassword();
           }}
+          textTransform="capitalize"
         >
           {isLoading ? "loading" : "login"}
         </Button>
